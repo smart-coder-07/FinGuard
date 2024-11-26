@@ -1,0 +1,9 @@
+package com.portfolio.service;
+
+import com.portfolio.model.Portfolio;
+
+public interface PortfolioService {
+	
+	Portfolio add(Portfolio p);
+
+}

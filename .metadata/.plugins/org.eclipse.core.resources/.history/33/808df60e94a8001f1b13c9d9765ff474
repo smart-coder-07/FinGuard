@@ -1,0 +1,5 @@
+package com.portfolio.repository;
+
+public interface PortfolioRepository {
+
+}

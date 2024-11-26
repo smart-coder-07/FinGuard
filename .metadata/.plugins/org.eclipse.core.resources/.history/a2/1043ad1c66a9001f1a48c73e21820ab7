@@ -1,0 +1,74 @@
+package com.finguardapp.sevice;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.loan.dto.DebtDto;
+import com.loan.model.Debt;
+import com.loan.repository.DebtRepository;
+
+import jakarta.validation.Valid;
+@Service
+public class DebtServiceImpl implements DebtService{
+	@Autowired
+	private DebtRepository debtRepository;
+
+
+	public Debt addDebt(DebtDto debt) {
+		Debt d = new Debt();
+		d.setDept_Type(debt.getDept_Type());
+		d.setDue_Date(debt.getDue_Date());
+		d.setId(debt.getId());
+		d.setPrinciple_Amount(debt.getPrinciple_Amount());
+		d.setUserId(debt.getUserId());
+		d.setRemaining_Amount(debt.getRemaining_Amount());
+		d.setDuration_In_Months(debt.getDuration_In_Months());
+		d.setInterest_Rate(debt.getInterest_Rate());
+		return debtRepository.save(d);
+	}
+	
+	public double calculateEMI(@Valid Debt debt) {
+        double monthlyInterestRate = (debt.getInterest_Rate() / 100) / 12;
+        return (debt.getPrinciple_Amount() * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, debt.getDuration_In_Months())) /
+                (Math.pow(1 + monthlyInterestRate, debt.getDuration_In_Months()) - 1);
+    }
+	
+	public double calculateTotalInterest( Debt debt) {
+		 double emi = calculateEMI(debt);
+	     return emi * debt.getDuration_In_Months() - debt.getPrinciple_Amount();
+	}
+	
+	public List<String> generateRepaymentSchedule(Debt debt) {
+		double emi = calculateEMI(debt);
+        double remainingAmount = debt.getRemaining_Amount();
+        double monthlyInterestRate = (debt.getInterest_Rate() / 100) / 12;
+        
+        List<String> repaymentSchedule = new ArrayList<>();
+        for (int month = 1; month <= debt.getDuration_In_Months(); month++) {
+            double interestPayment = remainingAmount * monthlyInterestRate;
+            double principalPayment = emi - interestPayment;
+            remainingAmount -= principalPayment;
+
+            if (remainingAmount < 0) remainingAmount = 0;
+
+            repaymentSchedule.add(String.format("Month: %d | Principal Payment: %.2f | Interest Payment: %.2f | Remaining Balance: %.2f",
+                    month, principalPayment, interestPayment, remainingAmount));
+        }
+        return repaymentSchedule;
+	}
+	
+	public List<Debt> findDebtsByUserId(@Valid int userId) {
+		 return debtRepository.findAll().stream().filter(debt -> debt.getUserId() == userId).toList();
+	}
+	public Debt findDebtById(Long debtId) {
+	    return debtRepository.findById(debtId)
+	            .orElseThrow(() -> new RuntimeException("Debt not found"));
+	}
+
+	
+
+
+}

@@ -1,0 +1,32 @@
+package com.user.test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.user.UserServiceApplication;
+import com.user.entity.User;
+import com.user.repository.UserCredentialRepository;
+import com.user.service.AuthService;
+
+@SpringBootTest(classes = UserServiceApplication.class)
+public class UserServiceTest {
+	
+	@Autowired
+	private AuthService authservice;
+	
+	@Autowired
+	private UserCredentialRepository userRepo;
+	
+	@Autowired
+	private static User user;
+	
+	@BeforeEach
+	void setUp() {
+		user.setId(1);
+		user.setName("Atul");
+		user.setEmail("atul@gmail.com");
+		user.setRole("user");
+	}
+	
+}

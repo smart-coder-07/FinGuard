@@ -1,0 +1,39 @@
+package com.portfolio.api;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.portfolio.model.Portfolio;
+import com.portfolio.service.PortfolioService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/portfolio")
+public class PortFolioController {
+	
+	@Autowired
+	private PortfolioService pService;
+	
+	//Testing the service
+	
+	@GetMapping("/test")
+	public ResponseEntity<String> test(){
+		return new ResponseEntity<String>("portfolio testing successfully", HttpStatus.OK);
+	}
+	
+	//Adding the Portfolio
+	
+	@PostMapping("/add")
+	public ResponseEntity<Portfolio> addInvestment(@RequestBody @Valid Portfolio p){
+		return new ResponseEntity<Portfolio>(pService.add(p),HttpStatus.CREATED);
+	}
+	
+
+}

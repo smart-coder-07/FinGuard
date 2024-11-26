@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename package &apos;com.finguardapp&apos; to &apos;com.loan&apos;&#x0D;&#x0A;- Original project: &apos;DebtService&apos;&#x0D;&#x0A;- Original element: &apos;DebtService/src/main/java/com.finguardapp&apos;&#x0D;&#x0A;- Renamed element: &apos;DebtService/src/main/java/com.loan&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings&#x0D;&#x0A;- Rename subpackages of the package" description="Rename package &apos;com.finguardapp&apos;" flags="589830" hierarchical="true" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.finguardapp" name="com.loan" qualified="false" references="true" stamp="1732344150492" textual="false" version="1.0"/>
+</session>

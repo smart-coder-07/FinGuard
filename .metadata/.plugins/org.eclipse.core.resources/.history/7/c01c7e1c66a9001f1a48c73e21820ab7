@@ -1,0 +1,13 @@
+package com.finguardapp;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class Debt1Application {
+
+	public static void main(String[] args) {
+		SpringApplication.run(Debt1Application.class, args);
+	}
+
+}

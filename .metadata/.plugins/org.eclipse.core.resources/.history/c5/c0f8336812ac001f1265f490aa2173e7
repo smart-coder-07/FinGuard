@@ -1,0 +1,97 @@
+package com.portfolio;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+
+import com.portfolio.model.Portfolio;
+import com.portfolio.model.Transaction;
+import com.portfolio.model.User;
+import com.portfolio.repository.PortfolioRepository;
+import com.portfolio.service.PortfolioService;
+
+@SpringBootTest(classes = PortfolioServiceApplication.class)
+public class PortfolioServiceTest {
+	
+	@Autowired
+	private PortfolioService portfolioService;
+	
+	@Autowired
+	private PortfolioRepository portfolioRepo;
+	
+	private RestTemplate restTemplate;
+
+    private Portfolio testPortfolio;
+    private Transaction transaction;
+    private User testUser;
+    
+    @BeforeEach
+    public void setData() {
+    	restTemplate = new RestTemplate();
+    	testPortfolio = new Portfolio();
+    	testPortfolio.setAssetName("HDFC");
+    	testPortfolio.setAssetType("stock");
+    	testPortfolio.setCurrentPrice(testPortfolio.getPurchasePrice());
+    	testPortfolio.setInvestmentId(1);
+    	testPortfolio.setPurchasePrice(testPortfolio.getPurchasePrice());
+    	testPortfolio.setQuantity(10);
+    	testPortfolio.setUserId(1);
+    	testPortfolio.setUsername("atul");
+    	
+    	testUser = new User();
+        testUser.setId(1);
+        testUser.setName("atul");
+        
+        transaction = new Transaction();
+        transaction.setUserId(1);
+        transaction.setAmount(1000.00);
+        transaction.setCategory("Stock");
+        transaction.setType("debit");
+        transaction.setMessage("Your Tesla transaction is successful");
+    	
+        portfolioRepo.save(testPortfolio);
+    }
+    
+    @Test
+    public void testAdd() {
+    	String urlTransaction = "http://localhost:8080/transaction/transaction/create"; // Change as needed for your test server
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("loggedInUser", String.valueOf(testPortfolio.getUserId()));
+        HttpEntity<Transaction> entity = new HttpEntity<>(transaction, headers);
+        
+        ResponseEntity<Transaction> transactionEntity = restTemplate.exchange(urlTransaction, HttpMethod.POST, entity, Transaction.class);
+
+        // Verify the transaction was successful
+        assertEquals(HttpStatus.OK, transactionEntity.getStatusCode());
+        
+        String urlUser = "http://localhost:8080/userservice/auth/" + testPortfolio.getUserId();
+        
+        // Simulate getting the user
+        ResponseEntity<User> userResponse = restTemplate.exchange(urlUser, HttpMethod.GET, null, User.class);
+        assertEquals(HttpStatus.OK, userResponse.getStatusCode());
+        User user = userResponse.getBody();
+
+        assertNotNull(user);
+        assertEquals(testPortfolio.getUserId(), user.getId());
+
+        // Test adding the portfolio
+        Portfolio savedPortfolio = portfolioService.add(testPortfolio);
+
+        // Assert that the portfolio is added correctly
+        assertNotNull(savedPortfolio);
+        assertEquals(testPortfolio.getPurchasePrice(), savedPortfolio.getPurchasePrice());
+        assertEquals(testPortfolio.getUserId(), savedPortfolio.getUserId());
+        assertEquals(testPortfolio.getAssetName(), savedPortfolio.getAssetName());
+        assertNotNull(savedPortfolio.getUsername());
+    }
+
+}

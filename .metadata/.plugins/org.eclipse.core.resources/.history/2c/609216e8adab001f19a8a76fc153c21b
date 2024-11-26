@@ -1,0 +1,139 @@
+package com.portfolio;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.portfolio.model.Portfolio;
+import com.portfolio.model.User;
+import com.portfolio.repository.PortfolioRepository;
+import com.portfolio.service.PortfolioService;
+
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
+import java.util.Optional;
+
+@SpringBootTest
+@Transactional
+public class PortfolioServiceTest {
+
+    @Autowired
+    private PortfolioService portfolioService;
+
+    @Autowired
+    private PortfolioRepository portfolioRepository;
+
+//    @Autowired
+//    private PortfolioRepository userRepository;
+
+    private User testUser;
+    private Portfolio testPortfolio;
+
+    @BeforeEach
+    public void setup() {
+        // Create and save a test user
+//        testUser = new User();
+//        testUser.setName("testUser");
+//        testUser = portfolioRepository.save(testUser);
+
+        // Create and save a test portfolio for the user
+        testPortfolio = new Portfolio();
+        testPortfolio.setUserId(testUser.getId());
+        testPortfolio.setAssetName("Test Asset");
+        testPortfolio.setAssetType("Stock");
+        testPortfolio.setPurchasePrice(100.0);
+        testPortfolio.setCurrentPrice(100.0);
+        testPortfolio = portfolioRepository.save(testPortfolio);
+    }
+
+    @Test
+    public void testAddPortfolio() {
+        // Given
+        Portfolio newPortfolio = new Portfolio();
+        newPortfolio.setUserId(testUser.getId());
+        newPortfolio.setAssetName("New Asset");
+        newPortfolio.setAssetType("Bond");
+        newPortfolio.setPurchasePrice(200.0);
+        
+        // When
+        Portfolio addedPortfolio = portfolioService.add(newPortfolio);
+        
+        // Then
+        assertNotNull(addedPortfolio.getUserId());
+        assertEquals("New Asset", addedPortfolio.getAssetName());
+        assertEquals("Bond", addedPortfolio.getAssetType());
+        assertEquals(200.0, addedPortfolio.getPurchasePrice());
+    }
+
+    @Test
+    public void testGetAllInvestmentsByUserId() {
+        // Given
+        int userId = testUser.getId();
+        
+        // When
+        List<Portfolio> portfolios = portfolioService.getAllInvestmentByUserId(userId);
+        
+        // Then
+        assertFalse(portfolios.isEmpty());
+        assertEquals(1, portfolios.size());
+        assertEquals(testPortfolio.getAssetName(), portfolios.get(0).getAssetName());
+    }
+
+    @Test
+    public void testGetAllInvestmentsByType() {
+        // Given
+        int userId = testUser.getId();
+        String assetType = "Stock";
+        
+        // When
+        List<Portfolio> portfolios = portfolioService.getAllInvestmentByType(userId, assetType);
+        
+        // Then
+        assertFalse(portfolios.isEmpty());
+        assertEquals(1, portfolios.size());
+        assertEquals(assetType, portfolios.get(0).getAssetType());
+    }
+
+    @Test
+    public void testUpdateCurrentPrice() {
+        // Given
+        double newPrice = 150.0;
+        String assetName = "Test Asset";
+        
+        // When
+        String result = portfolioService.updateCurrentPrice(newPrice, assetName);
+        
+        // Then
+        assertEquals("Price updated successfully", result);
+        Portfolio updatedPortfolio = portfolioRepository.deleteByassetName(assetName).get();
+        assertEquals(newPrice, updatedPortfolio.getCurrentPrice());
+    }
+
+    @Test
+    public void testGetAllInvestments() {
+        // When
+        List<Portfolio> allInvestments = portfolioService.getAllInvestments();
+        
+        // Then
+        assertFalse(allInvestments.isEmpty());
+        assertEquals(1, allInvestments.size());
+        assertEquals(testPortfolio.getAssetName(), allInvestments.get(0).getAssetName());
+    }
+
+//    @Test
+//    public void testDeleteInvestmentByAssetName() {
+//        // Given
+//        String assetName = "Test Asset";
+//        
+//        // When
+//        String result = portfolioService.deleteInvestmentByAssetName(assetName);
+//        
+//        // Then
+//        assertEquals(assetName + " investment deleted successfully", result);
+//        Optional<Portfolio> deletedPortfolio = portfolioRepository.deleteByassetName(assetName);
+//        assertTrue(deletedPortfolio.isEmpty());
+//    }
+}

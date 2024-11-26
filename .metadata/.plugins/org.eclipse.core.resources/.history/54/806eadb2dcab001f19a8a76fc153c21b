@@ -1,0 +1,237 @@
+//package com.budget;
+//
+//import com.budget.model.Budget;
+//import com.budget.repository.BudgetRepository;
+//import com.budget.service.BudgetService;
+//
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.transaction.annotation.Transactional;
+//
+//import java.util.List;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+//
+//@SpringBootTest
+//@Transactional
+//public class BudgetServiceApplicationTests<BudgetServiceImpl> {
+//
+//    @Autowired
+//    private BudgetRepository budgetRepository;
+//    @Autowired
+//    private BudgetService budgetService;
+//
+//  
+//
+//    private Budget budget1;
+//    private Budget budget2;
+//
+//    @BeforeEach
+//    public void setUp() {
+//        // Setup the sample Budget objects
+//    	 budget1 = new Budget();
+//         budget1.setUserId(1);
+//         budget1.setAmount(100.0);
+//         budget1.setCategory("Food");
+//
+//         budget2 = new Budget();
+//         budget2.setUserId(2);
+//         budget2.setAmount(150.0);
+//         budget2.setCategory("Entertainment");
+//        // Save the sample budgets to the in-memory database
+//        budgetRepository.save(budget1);
+//        budgetRepository.save(budget2);
+//    }
+//
+//
+//
+//    @Test
+//    public void testGetByUserId() {
+//        // Act: Call the service method
+//        List<Budget> budgets = budgetService.getByuserId(1);
+//
+//        // Assert: Verify the result
+//        assertNotNull(budgets);
+//        assertEquals(1, budgets.size()); // Expecting 1 budget for userId 1
+//        assertEquals("Food", budgets.get(0).getCategory());
+//    }
+//
+//    @Test
+//    public void testGetByBudgetId() {
+//        // Act: Call the service method
+//        List<Budget> budgets = budgetService.getByBudgetid(budget1.getUserId());
+//
+//        // Assert: Verify the result
+//        assertNotNull(budgets);
+//        assertEquals(1, budgets.size());
+//        assertEquals("Food", budgets.get(0).getCategory());
+//    }
+//
+//    @Test
+//    public void testGetByCategory() {
+//        // Act: Call the service method
+//        List<Budget> budgets = budgetService.getBybcategory("Food");
+//
+//        // Assert: Verify the result
+//        assertNotNull(budgets);
+//        assertEquals(1, budgets.size()); // Expecting 1 budget for category "Food"
+//        assertEquals("Food", budgets.get(0).getCategory());
+//    }
+//
+//    @Test
+//    public void testDeleteByBudgetId() {
+//        // Act: Call the service method to delete the budget
+//        String result = budgetService.deleteBybudgetid(budget1.getUserId());
+//
+//        // Assert: Verify the result
+//        assertEquals("budget deleted successfully", result);
+//
+//        // Verify that the budget is actually deleted
+//        List<Budget> budgets = budgetService.getByBudgetid(budget1.getUserId());
+//        assertTrue(budgets.isEmpty()); // Ensure that no budget exists for the given ID
+//    }
+//}
+package com.budget;
+
+import com.budget.model.Budget;
+import com.budget.repository.BudgetRepository;
+import com.budget.service.BudgetService;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+@SpringBootTest
+@Transactional
+public class BudgetServiceTest {
+
+    @Autowired
+    private BudgetRepository budgetRepository;
+
+    @Autowired
+    private BudgetService budgetService;
+
+    private Budget budget1;
+    private Budget budget2;
+
+    @BeforeEach
+    public void setUp() {
+        // Create sample budgets
+        budget1 = new Budget();
+        budget1.setBudgetId(1);
+        budget1.setAmount(100.0);
+        budget1.setCategory("Food");
+        budget1.setUserName("Yash");
+        budget1.setUserId(1);
+
+        budget2 = new Budget();
+        budget1.setBudgetId(1);        
+        budget2.setAmount(150.0);
+        budget2.setCategory("Entertainment");
+        budget1.setUserName("Rushad");
+        budget2.setUserId(2);
+
+        // Save the sample budgets to the database
+        budgetRepository.save(budget1);
+        budgetRepository.save(budget2);
+    }
+
+    @Test
+    public void testGetByUserId() {
+        // Act: Call the service method
+        List<Budget> budgets = budgetService.getByuserId(1);
+
+        // Assert: Verify the result
+        assertNotNull(budgets);
+        assertEquals(1, budgets.size()); // Expecting 1 budget for userId 1
+        assertEquals("Food", budgets.get(0).getCategory());
+    }
+
+    @Test
+    public void testGetByBudgetId() {
+        // Act: Call the service method
+        List<Budget> budgets = budgetService.getByBudgetid(budget1.getBudgetId());
+
+        // Assert: Verify the result
+        assertNotNull(budgets);
+        assertEquals(1, budgets.size());
+        assertEquals("Food", budgets.get(0).getCategory());
+    }
+
+    @Test
+    public void testGetByCategory() {
+        // Act: Call the service method
+        List<Budget> budgets = budgetService.getBycategory("Food", use);
+
+        // Assert: Verify the result
+        assertNotNull(budgets);
+        assertEquals("Food", budgets.get(0).getCategory());
+    }
+
+    @Test
+    public void testDelete() {
+        // Act: Call the service method to delete the budget
+    	List<Budget> result = budgetService.delete(budget1.getCategory(), budget1.getUserId());
+
+        // Assert: Verify the result
+        assertEquals(budget2 , result);
+
+        // Verify that the budget is actually deleted
+        List<Budget> budgets = budgetService.getByBudgetid(budget1.getUserId());
+        assertTrue(budgets.isEmpty()); // Ensure that no budget exists for the given ID
+    }
+
+    @Test
+    public void testDeleteByInvalidcategory() {
+        // Act: Call the service method to delete a budget with an invalid ID
+    	List<Budget> result = budgetService.delete("Rent", budget1.getUserId()); // assuming Rent is an invalid ID
+
+        // Assert: Verify the result
+        assertEquals("budget deleted successfully", result);
+
+        // Verify that no budget exists with the invalid ID
+        List<Budget> budgets = budgetService.getByBudgetid(999);
+        assertTrue(budgets.isEmpty()); // No budget should be found
+    }
+    
+    @Test
+    public void testUpdateByCategory() {
+        // Arrange: Set the new amount for category "Food" for userId 1
+        double newAmount = 200.0;
+
+        // Act: Call the service method to update the budget
+        budgetService.updateByCategory(1, "Food", newAmount);
+
+        // Assert: Verify the budgets are updated correctly
+        List<Budget> updatedBudgets = budgetService.getByuserId(1);
+
+        // Verify that the budget for "Food" is updated
+        Budget updatedBudget = updatedBudgets.stream()
+                .filter(b -> b.getCategory().equals("Food"))
+                .findFirst()
+                .orElse(null);
+
+        assertNotNull(updatedBudget);
+       // assertEquals(newAmount, updatedBudget.getAmount(), 0.01); // Check if the amount is updated to 200.0
+    }
+
+    @Test
+    public void testGetCategory() {
+        // Act: Call the service method to get the categories for userId 1
+        List<Budget> categories = budgetService.getCategory(1);
+
+        // Assert: Verify the result
+        assertNotNull(categories);
+        assertTrue(categories.contains("Food")); // Ensure "Food" is a category for userId 1
+       // assertTrue(categories.contains("Entertainment")); // Ensure "Entertainment" is a category for userId 1
+    }
+
+}

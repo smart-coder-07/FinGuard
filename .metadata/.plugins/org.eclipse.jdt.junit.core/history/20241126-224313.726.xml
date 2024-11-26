@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PortfolioServiceTest" project="PortfolioService" tests="7" started="7" failures="0" errors="0" ignored="0">
+  <testsuite name="com.portfolio.PortfolioServiceTest" time="1.476" displayname="PortfolioServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]">
+    <testcase name="testAdd" classname="com.portfolio.PortfolioServiceTest" time="1.184" displayname="testAdd()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testAdd()]"/>
+    <testcase name="testUpdateCurrentPrice" classname="com.portfolio.PortfolioServiceTest" time="0.095" displayname="testUpdateCurrentPrice()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testUpdateCurrentPrice()]"/>
+    <testcase name="testGetAllInvestment" classname="com.portfolio.PortfolioServiceTest" time="0.078" displayname="testGetAllInvestment()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestment()]"/>
+    <testcase name="testGetAllInvestmentByType" classname="com.portfolio.PortfolioServiceTest" time="0.031" displayname="testGetAllInvestmentByType()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByType()]"/>
+    <testcase name="testGetAllInvestmentByUserId_UserNotFound" classname="com.portfolio.PortfolioServiceTest" time="0.016" displayname="testGetAllInvestmentByUserId_UserNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId_UserNotFound()]"/>
+    <testcase name="testDeleteInvestmentByAssetName" classname="com.portfolio.PortfolioServiceTest" time="0.048" displayname="testDeleteInvestmentByAssetName()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testDeleteInvestmentByAssetName()]"/>
+    <testcase name="testGetAllInvestmentByUserId" classname="com.portfolio.PortfolioServiceTest" time="0.016" displayname="testGetAllInvestmentByUserId()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId()]"/>
+  </testsuite>
+</testrun>

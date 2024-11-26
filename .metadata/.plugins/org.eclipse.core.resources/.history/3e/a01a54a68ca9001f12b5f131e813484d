@@ -1,0 +1,63 @@
+package com.portfolio.service;
+
+import java.util.ArrayList;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.portfolio.exception.PortfolioCustomException;
+import com.portfolio.model.Portfolio;
+import com.portfolio.model.User;
+import com.portfolio.repository.PortfolioRepository;
+
+@Service
+public class PortfolioServiceImpl implements PortfolioService {
+	
+	@Autowired
+	private PortfolioRepository pRepo;
+	
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@Override
+	public Portfolio add(Portfolio p) {
+		String url = "http://userservice/auth/"+p.getUserId();
+		User user = restTemplate.getForObject(url, User.class);
+		System.out.println(user);
+//		p.setUsername(user.getUsername());
+		p.setCurrentPrice(p.getPurchasePrice());
+		return pRepo.save(p);
+	}
+
+	@Override
+	public List<Portfolio> getAllInvestmentByUserId(int userId) {
+		List<Optional<Portfolio>> investmentList = pRepo.findByUserId(userId);
+		List<Portfolio> investments = new ArrayList<Portfolio>();
+		for(Optional<Portfolio> o: investmentList) {
+			investments.add(o.get());
+		}
+		return investments;
+	}
+
+	@Override
+	public List<Portfolio> getAllInvestmentByType(int userId, String assetType) {
+		List<Optional<Portfolio>> investmentList = pRepo.findByUserId(userId);
+		List<Portfolio> investments = new ArrayList<Portfolio>();
+		for(Optional<Portfolio> o: investmentList) {
+			investments.add(o.get());
+		}
+		investments = investments.stream().filter((a)->a.getAssetType().equals(assetType)).toList();
+		return investments;
+	}
+
+	@Override
+	public String updateCurrentPrice(double currentPrice, String assetName) {
+		pRepo.updateAllCurrentPrices(currentPrice, assetName);
+		return "Price updated successfully";
+	}
+
+}

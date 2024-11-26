@@ -1,0 +1,18 @@
+package com.portfolio;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.portfolio.repository.PortfolioRepository;
+import com.portfolio.service.PortfolioService;
+
+@SpringBootTest(classes = PortfolioServiceApplication.class)
+public class PortfolioServiceTest {
+	
+	@Autowired
+	private PortfolioService portfolioService;
+	
+	@Autowired
+	private PortfolioRepository portfolioRepo;
+
+}

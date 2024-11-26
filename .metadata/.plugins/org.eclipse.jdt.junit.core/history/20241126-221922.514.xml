@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PortfolioServiceTest" project="PortfolioService" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="com.portfolio.PortfolioServiceTest" time="1.757" displayname="PortfolioServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]">
+    <testcase name="testAdd" classname="com.portfolio.PortfolioServiceTest" time="1.562" displayname="testAdd()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testAdd()]"/>
+    <testcase name="testGetAllInvestmentByUserId_UserNotFound" classname="com.portfolio.PortfolioServiceTest" time="0.153" displayname="testGetAllInvestmentByUserId_UserNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId_UserNotFound()]"/>
+    <testcase name="testGetAllInvestmentByUserId" classname="com.portfolio.PortfolioServiceTest" time="0.04" displayname="testGetAllInvestmentByUserId()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId()]"/>
+  </testsuite>
+</testrun>

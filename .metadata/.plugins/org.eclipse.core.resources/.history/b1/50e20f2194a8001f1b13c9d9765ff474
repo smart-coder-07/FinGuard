@@ -1,0 +1,10 @@
+package com.portfolio.model;
+
+import jakarta.persistence.Entity;
+
+@Entity
+public class Portfolio {
+	
+	
+
+}

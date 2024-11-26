@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PortfolioServiceTest" project="PortfolioService" tests="6" started="6" failures="0" errors="0" ignored="0">
+  <testsuite name="com.portfolio.PortfolioServiceTest" time="1.475" displayname="PortfolioServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]">
+    <testcase name="testAdd" classname="com.portfolio.PortfolioServiceTest" time="1.249" displayname="testAdd()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testAdd()]"/>
+    <testcase name="testUpdateCurrentPrice" classname="com.portfolio.PortfolioServiceTest" time="0.105" displayname="testUpdateCurrentPrice()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testUpdateCurrentPrice()]"/>
+    <testcase name="testGetAllInvestment" classname="com.portfolio.PortfolioServiceTest" time="0.058" displayname="testGetAllInvestment()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestment()]"/>
+    <testcase name="testGetAllInvestmentByType" classname="com.portfolio.PortfolioServiceTest" time="0.032" displayname="testGetAllInvestmentByType()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByType()]"/>
+    <testcase name="testGetAllInvestmentByUserId_UserNotFound" classname="com.portfolio.PortfolioServiceTest" time="0.014" displayname="testGetAllInvestmentByUserId_UserNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId_UserNotFound()]"/>
+    <testcase name="testGetAllInvestmentByUserId" classname="com.portfolio.PortfolioServiceTest" time="0.012" displayname="testGetAllInvestmentByUserId()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId()]"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PortfolioServiceTest" project="PortfolioService" tests="1" started="1" failures="0" errors="1" ignored="0">
+  <testsuite name="com.portfolio.PortfolioServiceTest" time="1.575" displayname="PortfolioServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]">
+    <testcase name="testAdd" classname="com.portfolio.PortfolioServiceTest" time="1.575" displayname="testAdd()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testAdd()]">
+      <error>org.springframework.transaction.TransactionSystemException: Could not commit JPA transaction&#13;
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:571)&#13;
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795)&#13;
+	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758)&#13;
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698)&#13;
+	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416)&#13;
+	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)&#13;
+	at org.springframework.dao.support.PersistenceExceptionTranslationInterceptor.invoke(PersistenceExceptionTranslationInterceptor.java:138)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)&#13;
+	at org.springframework.data.jpa.repository.support.CrudMethodMetadataPostProcessor$CrudMethodMetadataPopulatingMethodInterceptor.invoke(CrudMethodMetadataPostProcessor.java:165)&#13;
+	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184)&#13;
+	at org.springframework.aop.framework.JdkDynamicAopProxy.invoke(JdkDynamicAopProxy.java:223)&#13;
+	at jdk.proxy2/jdk.proxy2.$Proxy140.save(Unknown Source)&#13;
+	at com.portfolio.PortfolioServiceTest.testAdd(PortfolioServiceTest.java:46)&#13;
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)&#13;
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1597)&#13;
+Caused by: jakarta.persistence.RollbackException: Error while committing the transaction&#13;
+	at org.hibernate.internal.ExceptionConverterImpl.convertCommitException(ExceptionConverterImpl.java:67)&#13;
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:104)&#13;
+	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:562)&#13;
+	... 16 more&#13;
+Caused by: jakarta.validation.ConstraintViolationException: Validation failed for classes [com.portfolio.model.Portfolio] during update time for groups [jakarta.validation.groups.Default, ]
+List of constraint violations:[
+	ConstraintViolationImpl{interpolatedMessage='must be greater than or equal to 150', propertyPath=purchasePrice, rootBeanClass=class com.portfolio.model.Portfolio, messageTemplate='{jakarta.validation.constraints.Min.message}'}
+]&#13;
+	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.validate(BeanValidationEventListener.java:161)&#13;
+	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.onPreUpdate(BeanValidationEventListener.java:94)&#13;
+	at org.hibernate.action.internal.EntityUpdateAction.preUpdate(EntityUpdateAction.java:363)&#13;
+	at org.hibernate.action.internal.EntityUpdateAction.execute(EntityUpdateAction.java:162)&#13;
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:644)&#13;
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511)&#13;
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414)&#13;
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41)&#13;
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127)&#13;
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429)&#13;
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491)&#13;
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354)&#13;
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978)&#13;
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439)&#13;
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169)&#13;
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267)&#13;
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)&#13;
+	... 17 more&#13;
+&#13;
+</error>
+    </testcase>
+  </testsuite>
+</testrun>

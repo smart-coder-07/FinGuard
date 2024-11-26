@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="PortfolioServiceTest" project="PortfolioService" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="com.portfolio.PortfolioServiceTest" time="1.401" displayname="PortfolioServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]">
+    <testcase name="testAdd" classname="com.portfolio.PortfolioServiceTest" time="1.232" displayname="testAdd()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testAdd()]"/>
+    <testcase name="testGetAllInvestmentByType" classname="com.portfolio.PortfolioServiceTest" time="0.122" displayname="testGetAllInvestmentByType()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByType()]"/>
+    <testcase name="testGetAllInvestmentByUserId_UserNotFound" classname="com.portfolio.PortfolioServiceTest" time="0.024" displayname="testGetAllInvestmentByUserId_UserNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId_UserNotFound()]"/>
+    <testcase name="testGetAllInvestmentByUserId" classname="com.portfolio.PortfolioServiceTest" time="0.015" displayname="testGetAllInvestmentByUserId()" uniqueid="[engine:junit-jupiter]/[class:com.portfolio.PortfolioServiceTest]/[method:testGetAllInvestmentByUserId()]"/>
+  </testsuite>
+</testrun>

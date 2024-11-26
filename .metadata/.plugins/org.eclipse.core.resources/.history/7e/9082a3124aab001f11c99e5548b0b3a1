@@ -1,0 +1,125 @@
+package com.portfolio.test;
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.portfolio.model.Portfolio;
+import com.portfolio.repository.PortfolioRepository;
+import com.portfolio.service.PortfolioServiceImpl;
+
+@SpringBootTest
+@Transactional
+public class PortfolioTest {
+
+    @Autowired
+    private PortfolioServiceImpl portfolioService;
+
+    @Autowired
+    private PortfolioRepository portfolioRepository;
+
+    @Autowired
+    private TestRestTemplate restTemplate;
+
+    @Test
+    public void testAddPortfolio() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+
+        Portfolio savedPortfolio = portfolioService.add(portfolio);
+
+        assertNotNull(savedPortfolio);
+        assertEquals("AAPL", savedPortfolio.getAssetName());
+    }
+
+    @Test
+    public void testGetAllInvestmentByUserId() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+        portfolioRepository.save(portfolio);
+
+        List<Portfolio> investments = portfolioService.getAllInvestmentByUserId(1);
+
+        assertFalse(investments.isEmpty());
+        assertEquals(1, investments.size());
+    }
+
+    @Test
+    public void testGetAllInvestmentByType() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+        portfolioRepository.save(portfolio);
+
+        List<Portfolio> investments = portfolioService.getAllInvestmentByType(1, "stock");
+
+        assertFalse(investments.isEmpty());
+        assertEquals(1, investments.size());
+        assertEquals("stock", investments.get(0).getAssetType());
+    }
+
+    @Test
+    public void testUpdateCurrentPrice() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+        portfolioRepository.save(portfolio);
+
+        String response = portfolioService.updateCurrentPrice(200.0, "AAPL");
+
+        assertEquals("Price updated successfully", response);
+        Portfolio updatedPortfolio = portfolioRepository.findById(portfolio.getInvestmentId()).get();
+        assertEquals(200.0, updatedPortfolio.getCurrentPrice());
+    }
+
+    @Test
+    public void testGetAllInvestments() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+        portfolioRepository.save(portfolio);
+
+        List<Portfolio> allInvestments = portfolioService.getAllInvestments();
+
+        assertFalse(allInvestments.isEmpty());
+        assertEquals(1, allInvestments.size());
+    }
+
+    @Test
+    public void testDeleteInvestmentByAssetName() {
+        Portfolio portfolio = new Portfolio();
+        portfolio.setUserId(1);
+        portfolio.setAssetType("stock");
+        portfolio.setAssetName("AAPL");
+        portfolio.setQuantity(10);
+        portfolio.setPurchasePrice(150.0);
+        portfolioRepository.save(portfolio);
+
+        String response = portfolioService.deleteInvestmentByAssetName("AAPL");
+
+        assertEquals("AAPL investment deleted successfully", response);
+        assertFalse(portfolioRepository.findById(portfolio.getInvestmentId()).isPresent());
+    }
+}
